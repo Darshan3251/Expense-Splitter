@@ -33,13 +33,13 @@ function AddExpense({ friendsList, expenses, setExpenses }) {
       const newExpense = {
         title,
         amount: parseFloat(amount),
-        payer, // Include the payer field
+        payer,
       };
       const updatedExpenses = [...expenses, newExpense];
       setExpenses(updatedExpenses);
       setTitle("");
       setAmount("");
-      setPayer(""); // Reset the payer field
+      setPayer("");
     } else {
       alert("Please fill in all fields correctly.");
     }
@@ -93,43 +93,46 @@ function AddExpense({ friendsList, expenses, setExpenses }) {
         </Button>
       </VStack>
 
-      <Box mt={6} p={{ base: 3, md: 5 }} borderWidth={1} borderRadius="lg" boxShadow="md">
-        <Table
-          variant="striped"
-          colorScheme="teal"
-          size={useBreakpointValue({ base: "sm", md: "md" })}
-        >
-          <TableCaption>Expense List</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>Expense Title</Th>
-              <Th isNumeric>Amount</Th>
-              <Th>Payer</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {expenses.map((expense, index) => (
-              <Tr key={index}>
-                <Td>{expense.title}</Td>
-                <Td isNumeric>₹{expense.amount.toFixed(2)}</Td>
-                <Td>{expense.payer}</Td>
-                <Td>
-                  <Tooltip label="Delete Expense" aria-label="Delete Expense">
-                    <IconButton
-                      icon={<DeleteIcon />}
-                      colorScheme="red"
-                      onClick={() => handleDeleteExpense(index)}
-                      size="sm"
-                      aria-label="Delete Expense"
-                    />
-                  </Tooltip>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </Box>
+      <Box mt={6} p={{ base: 3, md: 5 }} borderWidth={1} borderRadius="lg" boxShadow="md" overflowX="auto">
+  <Table
+    variant="striped"
+    colorScheme="teal"
+    size="sm"
+    minWidth="max-content" // Ensures that the table's width adjusts based on its content
+  >
+    <TableCaption>Expense List</TableCaption>
+    <Thead>
+      <Tr>
+        <Th>Expense Title</Th>
+        <Th isNumeric>Amount</Th>
+        <Th>Payer</Th>
+        <Th>Actions</Th>
+      </Tr>
+    </Thead>
+    <Tbody>
+      {expenses.map((expense, index) => (
+        <Tr key={index}>
+          <Td>{expense.title}</Td>
+          <Td isNumeric>₹{expense.amount.toFixed(2)}</Td>
+          <Td>{expense.payer}</Td>
+          <Td>
+            <Tooltip label="Delete Expense" aria-label="Delete Expense">
+              <IconButton
+                icon={<DeleteIcon />}
+                colorScheme="red"
+                onClick={() => handleDeleteExpense(index)}
+                size="sm"
+                aria-label="Delete Expense"
+              />
+            </Tooltip>
+          </Td>
+        </Tr>
+      ))}
+    </Tbody>
+  </Table>
+</Box>
+
+
     </Box>
   );
 }
