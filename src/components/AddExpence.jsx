@@ -18,6 +18,7 @@ import {
   useBreakpointValue,
   IconButton,
   Tooltip,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 
@@ -25,6 +26,7 @@ function AddExpense({ friendsList, expenses, setExpenses }) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [payer, setPayer] = useState("");
+  const [isLargerThanMD] = useMediaQuery("(min-width: 48em)");
 
   const handleAddExpense = () => {
     if (title && parseFloat(amount) > 0 && payer) {
@@ -49,48 +51,54 @@ function AddExpense({ friendsList, expenses, setExpenses }) {
   };
 
   return (
-    <Box mb={6} p={5} borderWidth={1} borderRadius="lg" boxShadow="md">
-      <Text fontSize="xl" fontWeight="bold" mb={4}>
+    <Box mb={6} p={{ base: 3, md: 5 }} borderWidth={1} borderRadius="lg" boxShadow="md">
+      <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="bold" mb={4}>
         Add Expense
       </Text>
-      <FormControl mb={4}>
-        <FormLabel>Expense Title</FormLabel>
-        <Input
-          placeholder="Enter Expense Title (e.g., Hotel)"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </FormControl>
-      <FormControl mb={4}>
-        <FormLabel>Amount</FormLabel>
-        <Input
-          type="number"
-          placeholder="Enter Amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          min="0.01"
-        />
-      </FormControl>
-      <FormControl mb={4}>
-        <FormLabel>Select Payer</FormLabel>
-        <Select
-          placeholder="Select Payer"
-          value={payer}
-          onChange={(e) => setPayer(e.target.value)}
-        >
-          {friendsList.map((friend, index) => (
-            <option key={index} value={friend}>
-              {friend}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
-      <Button colorScheme="teal" onClick={handleAddExpense} width="full">
-        Add Expense
-      </Button>
+      <VStack spacing={4}>
+        <FormControl mb={4}>
+          <FormLabel>Expense Title</FormLabel>
+          <Input
+            placeholder="Enter Expense Title (e.g., Hotel)"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </FormControl>
+        <FormControl mb={4}>
+          <FormLabel>Amount</FormLabel>
+          <Input
+            type="number"
+            placeholder="Enter Amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            min="0.01"
+          />
+        </FormControl>
+        <FormControl mb={4}>
+          <FormLabel>Select Payer</FormLabel>
+          <Select
+            placeholder="Select Payer"
+            value={payer}
+            onChange={(e) => setPayer(e.target.value)}
+          >
+            {friendsList.map((friend, index) => (
+              <option key={index} value={friend}>
+                {friend}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        <Button colorScheme="teal" onClick={handleAddExpense} width="full">
+          Add Expense
+        </Button>
+      </VStack>
 
-      <Box mt={6} p={5} borderWidth={1} borderRadius="lg" boxShadow="md">
-        <Table variant="striped" colorScheme="teal" size={useBreakpointValue({ base: "sm", md: "md" })}>
+      <Box mt={6} p={{ base: 3, md: 5 }} borderWidth={1} borderRadius="lg" boxShadow="md">
+        <Table
+          variant="striped"
+          colorScheme="teal"
+          size={useBreakpointValue({ base: "sm", md: "md" })}
+        >
           <TableCaption>Expense List</TableCaption>
           <Thead>
             <Tr>
@@ -127,4 +135,3 @@ function AddExpense({ friendsList, expenses, setExpenses }) {
 }
 
 export default AddExpense;
-
